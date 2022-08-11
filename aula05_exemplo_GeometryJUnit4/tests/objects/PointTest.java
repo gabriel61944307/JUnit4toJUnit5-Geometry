@@ -1,14 +1,15 @@
 package objects;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.Before;
+//Bibliotecas alteradas para JUnit5
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 
 public class PointTest  {
 
   Point p1, p2;
 	
-  @Before
+  @BeforeEach
   public void initializePoints() {
     p1 = new Point();
     p2 = new Point();
@@ -18,25 +19,27 @@ public class PointTest  {
   public void distanceBetweenPoints() {
     p1.setPoint(0, 0);
     p2.setPoint(0, 5);
-    assertEquals(5, p1.distance(p2), 0f);
+    Assertions.assertEquals(5, p1.distance(p2), 0f);
   }
 	
   @Test
   public void distanceSamePoint() {
     p1.setPoint(0, 0);
-    assertEquals(0, p1.distance(p1), 0f);
+    Assertions.assertEquals(0, p1.distance(p1), 0f);
    }
   
-  @Test(expected= NullPointerException.class)
+  @Test
   public void testNull() {
     Point p3 = null;
-    try {    
-      assertEquals(0, p1.distance(p3), 0f);
-    }
-    catch(NullPointerException e) {
-      throw e;
-    }
-    fail("should not get here...");
+    Assertions.assertThrows(NullPointerException.class, () ->{
+	    try {    
+	    	Assertions.assertEquals(0, p1.distance(p3), 0f);
+	    }
+	    catch(NullPointerException e) {
+	      throw e;
+	    }
+	    Assertions.fail("should not get here...");
+	  });
   }
   
   @Test
@@ -46,7 +49,7 @@ public class PointTest  {
 	} catch (Exception e) {
 		//e.printStackTrace();
 		if (!( e instanceof NullPointerException )) {	
-			fail("excecao incorreta lancada");
+			Assertions.fail("excecao incorreta lancada");
 		}
 	}
   }
